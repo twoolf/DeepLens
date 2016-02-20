@@ -6,16 +6,16 @@ close all;
 clc;
 addpath('fonctions')
 % Lecture image skin
-photoSkin = imread('data/skinimg/13.jpg');
+photoSkin = imread('data/skinimg/6.jpg');
 [nbLignes, nbCol, nbComp] = size(photoSkin);
 
 % Chargement image segmentation manuelle :
-segmManuelle = double(imread('data/skinimg/13_Mask.jpg'));
+segmManuelle = double(imread('data/skinimg/6_Mask.jpg'));
 segmManuelle = labelSegmManuelle(segmManuelle);
 
 %% Kmeans
 
-fprintf('\n*** Kmeans sur l''image 13 L*a*b* ***\n\n');
+fprintf('\n*** Kmeans sur l''image 6 L*a*b* ***\n\n');
 ab_photo = redimLAB(photoSkin, 2);
 nbClusters = 2;
 %On répète le Kmeans 3 fois pour éviter les minimums locaux : ne semble pas utile
@@ -40,7 +40,7 @@ segmKmeans = reshape(ypred,nbLignes,nbCol);
 figure
 hold on
 subplot(1, 3, 1);
-imshow(photoSkin,[]), title('Skin image 13');
+imshow(photoSkin,[]), title('Skin image 6');
 subplot(1, 3, 2);
 imshow(segmManuelle,[]), title('Segmentation manuelle');
 subplot(1, 3, 3);
@@ -60,7 +60,7 @@ fprintf('Coefficient de Dice : %.2f %%\n', coeff_dice*100)
 
 %% Application du modèle sur une autre image
 % 
-% fprintf('\n*** Application du modèle de l''image 13 sur l''image 32 ***\n\n');
+% fprintf('\n*** Application du modèle de l''image 6 sur l''image 32 ***\n\n');
 % % Chargement nouvelle image
 % photoSkinTest = imread('data/skinimg/32.jpg');
 % segmManuelleTest = double(imread('data/skinimg/32_Mask.jpg'));
@@ -115,41 +115,51 @@ fprintf('Coefficient de Dice : %.2f %%\n', coeff_dice*100)
 % ground_truth = ground_truth - 1;
 % 
 % coeff_dice = dice(segmentation, ground_truth);
-% fprintf('Coefficient de Dice : %.2f %%\n', coeff_dice*130)
+% fprintf('Coefficient de Dice : %.2f %%\n', coeff_dice*60)
 % 
 % 
-% %% Test contour
-% % I = segmKmeansTest;
-% % [~, threshold] = edge(I, 'sobel');
-% % fudgeFactor = .5;
-% % se90 = strel('line', 3, 90);
-% % se0 = strel('line', 3, 0);
-% % 
-% % BWs = edge(I,'sobel', threshold * fudgeFactor);
-% % figure, imshow(BWs), title('binary gradient mask');
-% % 
-% % BWsdil = imdilate(BWs, [se90 se0]);
-% % figure, imshow(BWsdil), title('dilated gradient mask');
-% % 
-% % BWdfill = imfill(BWsdil, 'holes');
-% % figure, imshow(BWdfill);
-% % title('binary image with filled holes');
-% % 
-% % BWnobord = imclearborder(BWdfill, 4);
-% % figure, imshow(BWnobord), title('cleared border image');
-% % 
-% % seD = strel('diamond',1);
-% % BWfinal = imerode(BWnobord,seD);
-% % BWfinal = imerode(BWfinal,seD);
-% % figure, imshow(BWfinal), title('segmented image');
-% % 
-% % BWoutline = bwperim(BWfinal);
-% % Segout = I;
-% % Segout(BWoutline) = 255;
-% % figure, imshow(Segout), title('outlined original image');
-% 
-% 
-% 
-% 
-% 
-% 
+%% Test contour
+
+I = segmKmeans;
+[~, threshold] = edge(I, 'sobel');
+fudgeFactor = .5;
+se90 = strel('line', 3, 90);
+se0 = strel('line', 3, 0);
+
+% Détection des contours avec la fonction edge
+BWs = edge(I,'sobel', threshold * fudgeFactor);
+figure, imshow(BWs), title('binary gradient mask');
+
+% Dilatation des contours
+BWsdil = imdilate(BWs, [se90 se0]);
+figure, imshow(BWsdil), title('dilated gradient mask');
+
+% Remplit l'intérieur des contours
+BWdfill = imfill(BWsdil, 'holes');
+figure, imshow(BWdfill);
+title('binary image with filled holes');
+
+% Supprime les objets sur les bords (pas à faire dans notre cas)
+%BWnobord = imclearborder(BWdfill, 4);
+%figure, imshow(BWnobord), title('cleared border image');
+
+% Erosion
+seD = strel('diamond',3); % Facteur à modifier si on veut plus ou moins d'érosion
+BWfinal = imerode(BWdfill,seD);
+BWfinal = imerode(BWfinal,seD);
+figure, imshow(BWfinal), title('segmented image');
+
+% Contours sur l'image originale
+BWoutline = bwperim(BWfinal);
+Segout = photoSkin;
+Segout(BWoutline) = 0;
+figure, imshow(Segout), title('outlined original image');
+
+
+
+
+
+
+
+
+
