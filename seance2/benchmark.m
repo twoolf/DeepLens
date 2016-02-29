@@ -17,8 +17,9 @@ for i = 1:45
     fichier_segmManuelle = strcat('data/skinimg/', int2str(i));
     fichier_segmManuelle = strcat(fichier_segmManuelle, '_Mask.jpg');
     
-    [imSegm, dice(i), err_brut(i)] = segmentation_kmeans(fichier_image, fichier_segmManuelle, 'AB');
-    im_post = double(postTraitement(imSegm, imread(fichier_image), 0));
+    % Segmentation :
+    [imSegm, dice(i), err_brut(i)] = segmentation_kmeans(fichier_image, fichier_segmManuelle, 'AB', 0);
+    im_post = postTraitement(imSegm, imread(fichier_image), 0);
     [~, dice_post(i), err_brut_post(i)] = statistiques(fichier_segmManuelle, reshape(im_post, size(im_post, 1) * size(im_post, 2), 1));
 end
 
@@ -57,9 +58,17 @@ fprintf('Ecart-type :  %.2f ; post-traitement : %.2f\n\n', std(err_brut), std(er
 fprintf('Mediane : %.2f ; post-traitement : %.2f\n\n ', median(err_brut), median(err_brut_post));
 
 figure(3)
+subplot(2, 1, 1);
 plot(err_brut, '+')
 title('Pourcentages d''erreur pour chaque image')
+subplot(2, 1, 2);
+plot(err_brut_post, '+')
+title('Pourcentages d''erreur pour chaque image apr�s traitement')
 
 figure (4)
+subplot(1, 2, 1);
 hist(err_brut)
+title('Histogramme des pourcentages d''erreur obtenus')
+subplot(1, 2, 2);
+hist(err_brut_post)
 title('Histogramme des pourcentages d''erreur obtenus')
