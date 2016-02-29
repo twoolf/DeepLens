@@ -1,9 +1,22 @@
 function [imSegm, coeff_dice, taux_err] = statistiques(fichier_segmManuelle, ypred)
 % Affiche la matrice de confusion, calcule le taux d'erreur et le coef de
 % dice
-% segmManuelle : image binaire de la segmentation manuelle
+% Renvoie également la matrice de la segmentation AVEC LES LABELS AU FORMAT
+% 0-1
+
+% ENTREES
+% fichier_segmManuelle : nom du fichier de la segmentation manuelle de
+% l'image
+% ypred : la segemention obtenue par kmeans
+
+% SORTIES :
+% coeff_dice : le coefficient de Dice
+% taux_err : Taux d'erreur brut d'après la matrice de confusion;
+% imSegm : image BINAIRE (0-1) de la segmentation
+
 
 % Chargement de l'image vï¿½ritï¿½ terrain (notï¿½e segmManuelle):
+% segmManuelle : image binaire de la segmentation manuelle
 segmManuelle = double(imread(fichier_segmManuelle));
 segmManuelle = labelSegmManuelle(segmManuelle(:, :, 1));
 [nbLignes, nbCol, ~] = size(segmManuelle);
