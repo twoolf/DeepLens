@@ -1,7 +1,7 @@
 function [imSegm, coeff_dice, taux_err] = statistiques(fichier_segmManuelle, ypred)
 % Affiche la matrice de confusion, calcule le taux d'erreur et le coef de
 % dice
-% Renvoie également la matrice de la segmentation AVEC LES LABELS AU FORMAT
+% Renvoie ï¿½galement la matrice de la segmentation AVEC LES LABELS AU FORMAT
 % 0-1
 
 % ENTREES
@@ -11,7 +11,7 @@ function [imSegm, coeff_dice, taux_err] = statistiques(fichier_segmManuelle, ypr
 
 % SORTIES :
 % coeff_dice : le coefficient de Dice
-% taux_err : Taux d'erreur brut d'après la matrice de confusion;
+% taux_err : Taux d'erreur brut d'aprï¿½s la matrice de confusion;
 % imSegm : image BINAIRE (0-1) de la segmentation
 
 
