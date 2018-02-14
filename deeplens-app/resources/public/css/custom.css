@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#forkme img {
+    position: fixed;
+    top: 0;
+    right: 0;
+    border: 0;
+    z-index: 10000000000;
+    width: 15em;
+    opacity: 0.9;
+}
+
+#canvas {
+    font-size: larger;
+    // margin-top: 65px;
+}
+
+#canvas .well {
+    font-weight: bold;
+    min-height: 20em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+#canvas .entity {
+    margin: 0.5em;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.phone {
+  background-color: black;
+  border: thin solid gray;
+  border-radius: 1em;
+  width: 440px;
+  padding: 20px;
+  margin: 1.5em;
+}
+
+.phone-screen {
+  background-color: white;
+  width: 400px;
+  height: 600px;
+  overflow: scroll;
+  margin-bottom: 2em;
+}

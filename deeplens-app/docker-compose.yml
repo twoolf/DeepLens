@@ -1,0 +1,52 @@
+version: "3.3"
+# reference: https://docs.docker.com/compose/compose-file
+# docker-compose up --build
+
+services:
+  wellbe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: wellbe
+    ports:
+      - "5000:1337"
+      - "3449:3449"
+    # env_file: .env
+
+
+  blockchain:
+    image: ethereum/client-go:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+      - "30304:30304"
+    volumes:
+       - "./blockchain:/root/.ethereum"
+    entrypoint:
+      - /geth
+      - --dev
+      - --maxpeers
+      - "0"
+      - --port
+      - "30304"
+      - --shh
+      - --rpc
+      - --rpcport
+      - "8545"
+      - --rpcaddr ## for access from outside container... careful not to expose on public networks!
+      - 0.0.0.0
+      - --keystore
+      - devnet
+      - --datadir
+      - /root/eth-devnet/
+      - --minerthreads
+      - "1"
+      - --rpccorsdomain
+      - "*"
+      - --rpcapi
+      - "eth,net,web3,personal,shh"
+      # - --networkid ## work around issue reported as "block sealing failed"
+      # - "9876"
