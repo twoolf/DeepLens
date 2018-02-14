@@ -1,0 +1,14 @@
+﻿AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Lambda that publishes labels and probabilities to MQQT
+Resources:
+  deeplensactionrecognition:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: greengrassHelloWorld.function_handler
+      Runtime: python2.7
+      CodeUri: .
+      Description: Lambda that publishes labels and probabilities to MQQT
+      MemorySize: 1536
+      Timeout: 3
+      Role: 'arn:aws:iam::246573171701:role/AWSDeepLensLambdaRole'
