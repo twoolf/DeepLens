@@ -4,6 +4,9 @@ using Deep Lens for project on individuals self-monitoring of a skin condition
 ## Consists of primary data and machine-learning Jupyter notebook for training
 -- note the data consists of primary images and masks to enable scoring of the segmentation
 
+## Overview of Technology Used
+In addition to Deep Lens, we used MQTT to enable our App to have a stream of information coming from the Deep Lens device.  Our lambda function is triggered to return a confidence estimate for the severity of the psoriasis, based on the segmentation and the percent of the image that is potentially seen as at risk.  We used MXNet and Tensorflow for model training, along with hyperparamter refinement with Sagemaker.  The model was evaluated by training both on-device (see the YouTube video) and by Sagemaker with our images in a S3 bucket. 
+
 ## To build the project
 ### Steps
 1) Have setup and installed DeepLens as specified by AWS documentation, should have account access and registration of the device, along with at least an initial model installed to verify that the Deep Lens device is working correctly
