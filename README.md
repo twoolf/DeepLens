@@ -24,6 +24,6 @@ https://aws.amazon.com/blogs/machine-learning/aws-deeplens-extensions-build-your
 https://aws.amazon.com/blogs/machine-learning/customize-and-display-aws-deeplens-project-output-on-your-laptop/
 
 
-### Refernces for Psoriasis:
+### References for Psoriasis:
 https://en.wikipedia.org/wiki/Psoriasis_Area_and_Severity_Index
 https://www.sciencedirect.com/science/article/pii/S0169260717303875
