@@ -14,4 +14,5 @@ using Deep Lens for project on individuals self-monitoring of a skin condition
 6) Note that video as well as text is enabled in the MQTT
 7) We plan to do more Machine Learning training, both MXNet and TensorFlow.  The submission is based on the Caltech classifiction work (http://www.vision.caltech.edu/Image_Datasets/Caltech256/) 
 8) Note that the original data is from a dataset collected in France, two years back: https://github.com/EliseTellier/Medical-Image-Processing/tree/master/data/skinimg
-9) We plan to further enlarge this dataset and to look at the use of machine-learning algorithms for dealing with noise (in our case especially changes in lighting, focus, and image sizes)
+9) We plan to further enlarge this dataset and to look at the use of machine-learning algorithms for dealing with noise (in our case especially changes in lighting, focus, and image sizes).  For this later step we will be using ideas from this paper: https://arxiv.org/abs/1701.06487
+
